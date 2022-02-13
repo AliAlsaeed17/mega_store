@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mega_store/constants.dart';
+import 'package:mega_store/core/controllers/auth_controller.dart';
 import 'package:mega_store/widgets/custom_button.dart';
 import 'package:mega_store/widgets/custom_icon_button.dart';
 import 'package:mega_store/widgets/custom_text.dart';
 import 'package:mega_store/widgets/custom_text_form_field.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends GetWidget<AuthController> {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -72,11 +74,13 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.center,
             ),
             const SizedBox(height: 40),
-            //CustomIconButton(
-            //  text: "Sign In with Google",
-            //  imagePath: "assets/images/google.jpg",
-            //  onPressed: () {},
-            //),
+            CustomIconButton(
+              text: "Sign In with Google",
+              imagePath: "assets/images/google.png",
+              onPressed: () {
+                controller.googleSignIn();
+              },
+            ),
             const SizedBox(height: 20),
             CustomIconButton(
               text: "Sign In with Facebook",
