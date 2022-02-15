@@ -17,77 +17,78 @@ class LoginScreen extends GetWidget<AuthController> {
         elevation: 0.0,
         backgroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 50, right: 20, left: 20),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                CustomText(
-                  text: "Welcome",
-                  fontSize: 30,
-                ),
-                CustomText(
-                  text: "Sign Up",
-                  fontSize: 18,
-                  color: kPrimaryColor,
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            const CustomText(
-              text: "Sign in to continue",
-              fontSize: 14,
-              color: Colors.grey,
-              alignment: Alignment.topLeft,
-            ),
-            const SizedBox(height: 30),
-            CustomTextFormField(
-              text: "Email",
-              hintText: "Please enter your Email",
-              onSaved: (value) {},
-              validator: (value) {
-                return "";
-              },
-            ),
-            const SizedBox(height: 40),
-            CustomTextFormField(
-              text: "Password",
-              hintText: "********",
-              onSaved: (value) {},
-              validator: (value) {
-                return "";
-              },
-            ),
-            const SizedBox(height: 20),
-            const CustomText(
-              text: "Forget Password",
-              fontSize: 14,
-              alignment: Alignment.topRight,
-            ),
-            const SizedBox(height: 20),
-            CustomButton(text: "SIGN IN", onPressed: () {}),
-            const SizedBox(height: 20),
-            const CustomText(
-              text: "-OR-",
-              alignment: Alignment.center,
-            ),
-            const SizedBox(height: 40),
-            CustomIconButton(
-              text: "Sign In with Google",
-              imagePath: "assets/images/google.png",
-              onPressed: () {
-                controller.googleSignIn();
-              },
-            ),
-            const SizedBox(height: 20),
-            CustomIconButton(
-              text: "Sign In with Facebook",
-              imagePath: "assets/images/facebook.png",
-              onPressed: () {},
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 50, right: 20, left: 20),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  CustomText(
+                    text: "Welcome",
+                    fontSize: 30,
+                  ),
+                  CustomText(
+                    text: "Sign Up",
+                    fontSize: 18,
+                    color: kPrimaryColor,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              const CustomText(
+                text: "Sign in to continue",
+                fontSize: 14,
+                color: Colors.grey,
+                alignment: Alignment.topLeft,
+              ),
+              const SizedBox(height: 25),
+              CustomTextFormField(
+                text: "Email",
+                hintText: "Please enter your Email",
+                onSaved: (value) {},
+                validator: (value) {
+                  return "";
+                },
+              ),
+              const SizedBox(height: 35),
+              CustomTextFormField(
+                text: "Password",
+                hintText: "********",
+                onSaved: (value) {},
+                validator: (value) {
+                  return "";
+                },
+              ),
+              const SizedBox(height: 20),
+              const CustomText(
+                text: "Forget Password",
+                fontSize: 14,
+                alignment: Alignment.topRight,
+              ),
+              const SizedBox(height: 20),
+              CustomButton(text: "SIGN IN", onPressed: () {}),
+              const SizedBox(height: 20),
+              const CustomText(
+                text: "-OR-",
+                alignment: Alignment.center,
+              ),
+              const SizedBox(height: 5),
+              CustomIconButton(
+                text: "Sign In with Google",
+                imagePath: "assets/images/google.png",
+                onPressed: () {
+                  controller.googleSignIn();
+                },
+              ),
+              CustomIconButton(
+                text: "Sign In with Facebook",
+                imagePath: "assets/images/facebook.png",
+                onPressed: () {},
+              ),
+            ],
+          ),
         ),
       ),
     );
