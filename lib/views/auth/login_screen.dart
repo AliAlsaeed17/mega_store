@@ -85,7 +85,9 @@ class LoginScreen extends GetWidget<AuthController> {
               CustomIconButton(
                 text: "Sign In with Facebook",
                 imagePath: "assets/images/facebook.png",
-                onPressed: () {},
+                onPressed: () {
+                  controller.facebookSignIn();
+                },
               ),
             ],
           ),

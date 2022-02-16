@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  FacebookLogin _facebookLogin = FacebookLogin();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -34,5 +36,15 @@ class AuthController extends GetxController {
       accessToken: googleSignInAuthentication.accessToken,
     );
     await _auth.signInWithCredential(authCredential);
+  }
+
+  void facebookSignIn() async {
+    FacebookLoginResult result =
+        await _facebookLogin.logIn(permissions: [FacebookPermission.email]);
+    final accessToken = result.accessToken!.token;
+    if (result.status == FacebookLoginStatus.success) {
+      final facebookCredential = FacebookAuthProvider.credential(accessToken);
+      await _auth.signInWithCredential(facebookCredential);
+    }
   }
 }
