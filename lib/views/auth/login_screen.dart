@@ -22,7 +22,7 @@ class LoginScreen extends GetWidget<AuthController> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 50, right: 20, left: 20),
+          padding: const EdgeInsets.only(top: 30, right: 20, left: 20),
           child: Form(
             key: _formKey,
             child: Column(
@@ -58,10 +58,7 @@ class LoginScreen extends GetWidget<AuthController> {
                   text: "Email",
                   hintText: "Please enter your Email",
                   onSaved: (value) {
-                    controller.email = value;
-                  },
-                  validator: (value) {
-                    return "";
+                    controller.email = value!;
                   },
                 ),
                 const SizedBox(height: 35),
@@ -69,10 +66,7 @@ class LoginScreen extends GetWidget<AuthController> {
                   text: "Password",
                   hintText: "********",
                   onSaved: (value) {
-                    controller.password = value;
-                  },
-                  validator: (value) {
-                    return "";
+                    controller.password = value!;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -89,7 +83,6 @@ class LoginScreen extends GetWidget<AuthController> {
                     if (_formKey.currentState!.validate()) {
                       controller.emailAndPasswordSignIn();
                     }
-                    Get.offAll(const HomeScreen());
                   },
                 ),
                 const SizedBox(height: 20),

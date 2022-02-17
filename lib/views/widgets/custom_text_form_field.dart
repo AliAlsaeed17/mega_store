@@ -5,14 +5,12 @@ import 'custom_text.dart';
 class CustomTextFormField extends StatelessWidget {
   final String? text;
   final String? hintText;
-  final String Function(String?)? validator;
   final void Function(String?)? onSaved;
 
   const CustomTextFormField({
     Key? key,
     this.text,
     this.hintText,
-    this.validator,
     this.onSaved,
   }) : super(key: key);
 
@@ -31,7 +29,8 @@ class CustomTextFormField extends StatelessWidget {
             hintStyle: const TextStyle(color: Colors.black),
             fillColor: Colors.white,
           ),
-          validator: validator,
+          validator: (String? value) =>
+              value!.isEmpty ? "$text can not be empty" : null,
           onSaved: onSaved,
         ),
       ],
