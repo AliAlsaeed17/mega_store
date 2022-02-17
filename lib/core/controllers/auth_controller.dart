@@ -10,7 +10,7 @@ class AuthController extends GetxController {
   FacebookLogin _facebookLogin = FacebookLogin();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String email = "", password = "";
+  String fullName = "", email = "", password = "";
 
   Rxn<User?> _user = Rxn<User?>();
   String? get user => _user.value!.email;
@@ -61,6 +61,18 @@ class AuthController extends GetxController {
     try {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => Get.offAll(HomeScreen()));
+    } catch (e) {
+      print(e.toString());
+      Get.snackbar("Error login account", e.toString(),
+          colorText: Colors.black, snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  void emailAndPasswordSignUp() async {
+    try {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) => Get.offAll(HomeScreen()));
     } catch (e) {
       print(e.toString());
