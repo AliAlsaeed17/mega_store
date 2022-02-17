@@ -3,18 +3,23 @@ import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mega_store/views/home_screen.dart';
 
 class AuthController extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   FacebookLogin _facebookLogin = FacebookLogin();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String? email, password;
+  String email = "", password = "";
+
+  Rxn<User?> _user = Rxn<User?>();
+  String? get user => _user.value!.email;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    _user.bindStream(_auth.authStateChanges());
   }
 
   @override
@@ -54,8 +59,9 @@ class AuthController extends GetxController {
 
   void emailAndPasswordSignIn() async {
     try {
-      await _auth.signInWithEmailAndPassword(
-          email: email!, password: password!);
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => Get.offAll(HomeScreen()));
     } catch (e) {
       print(e.toString());
       Get.snackbar("Error login account", e.toString(),
