@@ -9,7 +9,7 @@ class ControlView extends GetWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return (Get.find<AuthController>().user != null)
-          ? const HomeScreen()
+          ? HomeScreen()
           : LoginScreen();
     });
   }
