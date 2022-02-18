@@ -1,5 +1,5 @@
 class UserModel {
-  String id, fullName, email, pic;
+  String? id, fullName, email, pic;
 
   UserModel(
       {required this.id,
