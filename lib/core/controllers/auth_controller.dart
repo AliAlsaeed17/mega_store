@@ -13,7 +13,7 @@ class AuthController extends GetxController {
   String fullName = "", email = "", password = "";
 
   Rxn<User?> _user = Rxn<User?>();
-  String? get user => _user.value!.email;
+  String? get user => _user.value?.email;
 
   @override
   void onInit() {
@@ -50,8 +50,8 @@ class AuthController extends GetxController {
     FacebookLoginResult result =
         await _facebookLogin.logIn(permissions: [FacebookPermission.email]);
     print(result);
-    final accessToken = result.accessToken!.token;
-    if (result.status == FacebookLoginStatus.success) {
+    final accessToken = result.accessToken?.token;
+    if (result.status == FacebookLoginStatus.success && accessToken != null) {
       final facebookCredential = FacebookAuthProvider.credential(accessToken);
       await _auth.signInWithCredential(facebookCredential);
     }
