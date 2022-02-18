@@ -77,13 +77,12 @@ class AuthController extends GetxController {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        UserModel userModel = UserModel(
+        await firebaseHelper.addUsertoFirestore(UserModel(
           id: user.user?.uid,
           fullName: fullName,
           email: user.user?.email,
           pic: '',
-        );
-        await firebaseHelper.addUsertoFirestore(userModel);
+        ));
       });
       Get.offAll(HomeScreen());
     } catch (e) {
