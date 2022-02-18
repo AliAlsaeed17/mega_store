@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mega_store/models/user_model.dart';
 
 class FirebaseHelper {
-  CollectionReference _userCollectionRef =
+  final CollectionReference _userCollectionRef =
       FirebaseFirestore.instance.collection("users");
 
   Future<void> addUsertoFirestore(UserModel user) async {
