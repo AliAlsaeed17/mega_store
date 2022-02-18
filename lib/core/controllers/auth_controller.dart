@@ -3,6 +3,7 @@ import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mega_store/core/services/firebase_helper.dart';
 import 'package:mega_store/models/user_model.dart';
 import 'package:mega_store/views/home_screen.dart';
 
@@ -10,6 +11,7 @@ class AuthController extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   FacebookLogin _facebookLogin = FacebookLogin();
   FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseHelper firebaseHelper = FirebaseHelper();
 
   String fullName = "", email = "", password = "";
 
@@ -74,13 +76,14 @@ class AuthController extends GetxController {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((user) {
+          .then((user) async {
         UserModel userModel = UserModel(
           id: user.user?.uid,
           fullName: fullName,
           email: user.user?.email,
           pic: '',
         );
+        await firebaseHelper.addUsertoFirestore(userModel);
       });
       Get.offAll(HomeScreen());
     } catch (e) {
