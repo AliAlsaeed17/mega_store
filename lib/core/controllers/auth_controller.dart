@@ -13,7 +13,7 @@ class AuthController extends GetxController {
   String fullName = "", email = "", password = "";
 
   Rxn<User?> _user = Rxn<User?>();
-  String? get user => _user.value?.email;
+  String? get userEmail => _user.value?.email;
 
   @override
   void onInit() {

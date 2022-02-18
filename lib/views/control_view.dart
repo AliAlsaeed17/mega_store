@@ -8,7 +8,7 @@ class ControlView extends GetWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return (Get.find<AuthController>().user != null)
+      return (Get.find<AuthController>().userEmail != null)
           ? HomeScreen()
           : LoginScreen();
     });
