@@ -1,7 +1,7 @@
-class User {
+class UserModel {
   String id, fullName, email, pic;
 
-  User(
+  UserModel(
       {required this.id,
       required this.fullName,
       required this.email,
@@ -9,7 +9,7 @@ class User {
 
   fromJson(Map<dynamic, dynamic> map) {
     if (map == null) return;
-    return User(
+    return UserModel(
       id: map['id'],
       fullName: map['fullName'],
       email: map['email'],
