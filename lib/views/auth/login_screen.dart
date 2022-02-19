@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mega_store/constants.dart';
 import 'package:mega_store/core/controllers/auth_controller.dart';
 import 'package:mega_store/views/auth/register_screen.dart';
-import 'package:mega_store/views/auth/home_screen.dart';
+import 'package:mega_store/views/home_screen.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/custom_text_form_field.dart';

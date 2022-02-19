@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mega_store/core/services/firebase_helper.dart';
 import 'package:mega_store/models/user_model.dart';
-import 'package:mega_store/views/auth/home_screen.dart';
+import 'package:mega_store/views/home_screen.dart';
 
 class AuthController extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
