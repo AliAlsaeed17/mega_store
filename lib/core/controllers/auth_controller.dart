@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mega_store/core/services/firebase_helper.dart';
 import 'package:mega_store/models/user_model.dart';
-import 'package:mega_store/views/home_screen.dart';
+import 'package:mega_store/views/auth/home_screen.dart';
 
 class AuthController extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
@@ -46,7 +46,15 @@ class AuthController extends GetxController {
       idToken: googleSignInAuthentication.idToken,
       accessToken: googleSignInAuthentication.accessToken,
     );
-    await _auth.signInWithCredential(authCredential);
+    await _auth.signInWithCredential(authCredential).then((user) async {
+      await firebaseHelper.addUsertoFirestore(UserModel(
+        id: user.user?.uid,
+        fullName: fullName,
+        email: user.user?.email,
+        pic: '',
+      ));
+      Get.offAll(HomeScreen());
+    });
   }
 
   void facebookSignIn() async {
@@ -56,7 +64,10 @@ class AuthController extends GetxController {
     final accessToken = result.accessToken?.token;
     if (result.status == FacebookLoginStatus.success && accessToken != null) {
       final facebookCredential = FacebookAuthProvider.credential(accessToken);
-      await _auth.signInWithCredential(facebookCredential);
+      await _auth.signInWithCredential(facebookCredential).then((user) async {
+        saveUser(user);
+        Get.offAll(HomeScreen());
+      });
     }
   }
 
@@ -64,7 +75,10 @@ class AuthController extends GetxController {
     try {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) => Get.offAll(HomeScreen()));
+          .then((user) async {
+        saveUser(user);
+        Get.offAll(HomeScreen());
+      });
     } catch (e) {
       print(e.toString());
       Get.snackbar("Error login account", e.toString(),
@@ -77,18 +91,22 @@ class AuthController extends GetxController {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        await firebaseHelper.addUsertoFirestore(UserModel(
-          id: user.user?.uid,
-          fullName: fullName,
-          email: user.user?.email,
-          pic: '',
-        ));
+        saveUser(user);
+        Get.offAll(HomeScreen());
       });
-      Get.offAll(HomeScreen());
     } catch (e) {
       print(e.toString());
       Get.snackbar("Error login account", e.toString(),
           colorText: Colors.black, snackPosition: SnackPosition.BOTTOM);
     }
+  }
+
+  void saveUser(UserCredential user) async {
+    await firebaseHelper.addUsertoFirestore(UserModel(
+      id: user.user?.uid,
+      fullName: fullName,
+      email: user.user?.email,
+      pic: '',
+    ));
   }
 }
