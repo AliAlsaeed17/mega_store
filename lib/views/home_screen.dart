@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mega_store/constants.dart';
+import 'package:mega_store/core/controllers/home_controller.dart';
 import 'package:mega_store/views/widgets/custom_text.dart';
 import 'auth/login_screen.dart';
 
@@ -139,53 +140,61 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            label: "",
-            activeIcon: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Text("Explore"),
-            ),
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                "assets/images/Icon_Explore.png",
-                fit: BoxFit.contain,
+      bottomNavigationBar: GetBuilder<HomeController>(
+        init: Get.find<HomeController>(),
+        builder: (controller) => BottomNavigationBar(
+          elevation: 0,
+          selectedItemColor: Colors.black,
+          backgroundColor: Colors.grey.shade100,
+          items: [
+            BottomNavigationBarItem(
+              label: "",
+              activeIcon: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text("Explore"),
+              ),
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Image.asset(
+                  "assets/images/Icon_Explore.png",
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-          BottomNavigationBarItem(
-            label: "",
-            activeIcon: Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text("Cart"),
-            ),
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Image.asset(
-                "assets/images/Icon_Cart.png",
-                fit: BoxFit.contain,
+            BottomNavigationBarItem(
+              label: "",
+              activeIcon: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text("Cart"),
+              ),
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Image.asset(
+                  "assets/images/Icon_Cart.png",
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-          BottomNavigationBarItem(
-            label: "",
-            activeIcon: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("Account"),
-            ),
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Image.asset(
-                "assets/images/Icon_User.png",
-                fit: BoxFit.contain,
+            BottomNavigationBarItem(
+              label: "",
+              activeIcon: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text("Account"),
+              ),
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Image.asset(
+                  "assets/images/Icon_User.png",
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-        ],
-        currentIndex: 0,
-        onTap: (index) {},
+          ],
+          currentIndex: controller.navigatorBottomIndex,
+          onTap: (index) {
+            controller.updateNavigatorBottomIndex(index);
+          },
+        ),
       ),
     );
   }
