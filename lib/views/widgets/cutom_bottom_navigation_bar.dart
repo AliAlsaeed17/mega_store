@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mega_store/core/controllers/home_controller.dart';
 
-class CutomBottomNavigationBar extends StatelessWidget {
-  const CutomBottomNavigationBar({Key? key}) : super(key: key);
+class CustomBottomNavigationBar extends StatelessWidget {
+  const CustomBottomNavigationBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
