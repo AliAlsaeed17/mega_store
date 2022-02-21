@@ -1,9 +1,9 @@
 class CategoryModel {
-  String name, image;
+  String? name, image;
 
   CategoryModel({required this.name, required this.image});
 
-  fromJson(Map<dynamic, dynamic> map) {
+  CategoryModel.fromJson(Map<String, dynamic> map) {
     name = map['name'];
     image = map['image'];
   }
