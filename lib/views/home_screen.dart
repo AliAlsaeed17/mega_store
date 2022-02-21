@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mega_store/constants.dart';
-import 'package:mega_store/core/controllers/home_controller.dart';
 import 'package:mega_store/views/widgets/custom_text.dart';
 import 'auth/login_screen.dart';
 

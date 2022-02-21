@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mega_store/core/controllers/home_controller.dart';
+import 'package:mega_store/core/controllers/navigation_controller.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      init: Get.find<HomeController>(),
+    return GetBuilder<NavigationController>(
+      init: Get.find<NavigationController>(),
       builder: (controller) => BottomNavigationBar(
         elevation: 0,
         selectedItemColor: Colors.black,
@@ -59,7 +59,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ],
         currentIndex: controller.navigatorBottomIndex,
         onTap: (index) {
-          controller.updateNavigatorBottomIndex(index);
+          controller.updateCurrentScreen(index);
         },
       ),
     );
