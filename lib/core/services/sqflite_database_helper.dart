@@ -1,11 +1,11 @@
 import 'package:mega_store/constants.dart';
-import 'package:mega_store/models/cart_model.dart';
+import 'package:mega_store/models/cart_product_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class MegaStoreDatabase {
-  MegaStoreDatabase._();
-  static final MegaStoreDatabase db = MegaStoreDatabase._();
+class MegaStoreDatabaseHelper {
+  MegaStoreDatabaseHelper._();
+  static final MegaStoreDatabaseHelper db = MegaStoreDatabaseHelper._();
   static Database? _database;
   Future<Database?> get database async {
     if (_database != null) return _database;
@@ -28,7 +28,7 @@ class MegaStoreDatabase {
     );
   }
 
-  insert(CartModel cart) async {
+  insert(CartProductModel cart) async {
     var dbClient = await database;
     await dbClient?.insert(
       cartTableName,
