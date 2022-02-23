@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:mega_store/core/services/extenstion.dart';
+
 class ProductModel {
-  String? name, description, price, color, size, image;
+  String? name, description, price, size, image;
+  Color? color;
 
   ProductModel(
       {required this.name,
@@ -13,7 +17,7 @@ class ProductModel {
     name = map['name'];
     description = map['description'];
     price = map['price'];
-    color = map['color'];
+    color = HexColor.fromHex(map['color']);
     size = map['size'];
     image = map['image'];
   }
