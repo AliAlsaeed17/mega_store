@@ -6,6 +6,7 @@ class CustomText extends StatelessWidget {
   final Color color;
   final Alignment alignment;
   final int? maxLines;
+  final double? lineSpace;
 
   const CustomText({
     Key? key,
@@ -14,6 +15,7 @@ class CustomText extends StatelessWidget {
     this.color = Colors.black,
     this.alignment = Alignment.center,
     this.maxLines,
+    this.lineSpace,
   }) : super(key: key);
 
   @override
@@ -24,7 +26,9 @@ class CustomText extends StatelessWidget {
         text,
         style: TextStyle(
           color: color,
+          height: lineSpace,
           fontSize: fontSize,
+          fontFamily: "SourceSansPro",
         ),
         maxLines: maxLines,
       ),
