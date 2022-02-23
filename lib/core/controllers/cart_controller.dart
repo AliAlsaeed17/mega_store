@@ -12,5 +12,7 @@ class CartController extends GetxController {
     update();
   }
 
-  void sss() {}
+  void sss() {
+    print("hellp");
+  }
 }
