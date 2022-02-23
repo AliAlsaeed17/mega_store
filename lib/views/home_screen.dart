@@ -146,7 +146,7 @@ class HomeScreen extends StatelessWidget {
                                       color: Colors.grey,
                                       maxLines: 1,
                                     ),
-                                    const SizedBox(height: 7),
+                                    //const SizedBox(height: 5),
                                     CustomText(
                                       text: controller
                                               .bestSellingProducts[index]
