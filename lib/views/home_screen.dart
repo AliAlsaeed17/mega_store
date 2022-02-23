@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mega_store/constants.dart';
 import 'package:mega_store/core/controllers/home_controller.dart';
+import 'package:mega_store/views/details_screen.dart';
 import 'package:mega_store/views/widgets/custom_text.dart';
 import 'auth/login_screen.dart';
 
@@ -104,47 +105,58 @@ class HomeScreen extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: controller.bestSellingProducts.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width * .4,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Container(
-                                        height: 220,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .4,
-                                        child: Image.network(
-                                          controller.bestSellingProducts[index]
-                                              .image!,
-                                          fit: BoxFit.fill,
+                            return GestureDetector(
+                              onTap: () {
+                                Get.to(DetailsScreen(
+                                    product:
+                                        controller.bestSellingProducts[index]));
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * .4,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Container(
+                                          height: 220,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .4,
+                                          child: Image.network(
+                                            controller
+                                                .bestSellingProducts[index]
+                                                .image!,
+                                            fit: BoxFit.fill,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  CustomText(
-                                    text: controller
-                                        .bestSellingProducts[index].name!,
-                                    alignment: Alignment.bottomCenter,
-                                  ),
-                                  CustomText(
-                                    text: controller.bestSellingProducts[index]
-                                        .description!,
-                                    alignment: Alignment.bottomCenter,
-                                    color: Colors.grey,
-                                    maxLines: 1,
-                                  ),
-                                  const SizedBox(height: 7),
-                                  CustomText(
-                                    text: controller
-                                            .bestSellingProducts[index].price! +
-                                        "\$",
-                                    alignment: Alignment.bottomCenter,
-                                    color: kPrimaryColor,
-                                  ),
-                                ],
+                                    CustomText(
+                                      text: controller
+                                          .bestSellingProducts[index].name!,
+                                      alignment: Alignment.bottomCenter,
+                                    ),
+                                    CustomText(
+                                      text: controller
+                                          .bestSellingProducts[index]
+                                          .description!,
+                                      alignment: Alignment.bottomCenter,
+                                      color: Colors.grey,
+                                      maxLines: 1,
+                                    ),
+                                    const SizedBox(height: 7),
+                                    CustomText(
+                                      text: controller
+                                              .bestSellingProducts[index]
+                                              .price! +
+                                          "\$",
+                                      alignment: Alignment.bottomCenter,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           },
