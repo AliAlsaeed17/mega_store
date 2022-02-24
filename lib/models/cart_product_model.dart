@@ -11,7 +11,7 @@ class CartProductModel {
     required this.price,
   });
 
-  CartProductModel.fromJson(Map<String, dynamic> map) {
+  CartProductModel.fromJson(Map<dynamic, dynamic> map) {
     name = map['name'];
     price = map['price'];
     image = map['image'];
