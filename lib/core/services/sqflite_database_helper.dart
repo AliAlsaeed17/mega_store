@@ -9,7 +9,7 @@ class MegaStoreDatabaseHelper {
   static Database? _database;
   Future<Database?> get database async {
     if (_database != null) return _database;
-    _database = initDb();
+    _database = await initDb();
     return _database;
   }
 
@@ -35,5 +35,16 @@ class MegaStoreDatabaseHelper {
       cart.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  Future<List<CartProductModel>> getAllProducts() async {
+    var dbClient = await database;
+    List<Map> maps =
+        await dbClient?.query(cartTableName) as List<Map<dynamic, dynamic>>;
+    List<CartProductModel> cartProducts = maps.isNotEmpty
+        ? maps.map((product) => CartProductModel.fromJson(product)).toList()
+        : [];
+
+    return cartProducts;
   }
 }
