@@ -1,29 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mega_store/constants.dart';
+import 'package:mega_store/core/controllers/cart_controller.dart';
 import 'package:mega_store/views/widgets/custom_button.dart';
 import 'package:mega_store/views/widgets/custom_text.dart';
-
-List<String> names = [
-  "ali",
-  "ali",
-  "ali",
-  "ali",
-  "ali",
-];
-List<String> images = [
-  "assets/images/chaire.png",
-  "assets/images/chaire.png",
-  "assets/images/chaire.png",
-  "assets/images/chaire.png",
-  "assets/images/chaire.png",
-];
-List<int> prices = [
-  600,
-  100,
-  900,
-  600,
-  200,
-];
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -34,67 +14,76 @@ class CartScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: Container(
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: 15);
-                },
-                itemCount: names.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    child: Row(
-                      children: [
-                        Image.asset(images[index]),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomText(
-                                text: names[index],
-                                fontSize: 24,
-                              ),
-                              SizedBox(height: 7),
-                              CustomText(
-                                text: "\$${prices[index].toString()}",
-                                color: kPrimaryColor,
-                              ),
-                              SizedBox(height: 20),
-                              Container(
-                                width: 120,
-                                height: 40,
-                                color: Colors.grey.shade200,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.add,
-                                      color: Colors.black,
+            child: GetBuilder<CartController>(
+              init: Get.find<CartController>(),
+              builder: (controller) => Padding(
+                padding: const EdgeInsets.all(15),
+                child: Container(
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 15);
+                    },
+                    itemCount: controller.products.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child: Row(
+                          children: [
+                            Image.network(controller.products[index].image!),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    text: controller.products[index].name!,
+                                    fontSize: 24,
+                                  ),
+                                  const SizedBox(height: 7),
+                                  CustomText(
+                                    text:
+                                        "\$${controller.products[index].price.toString()}",
+                                    color: kPrimaryColor,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Container(
+                                    width: 120,
+                                    height: 40,
+                                    color: Colors.grey.shade200,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.add,
+                                          color: Colors.black,
+                                        ),
+                                        const SizedBox(width: 20),
+                                        const CustomText(
+                                          text: "1",
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                        ),
+                                        const SizedBox(width: 20),
+                                        Container(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 20),
+                                          child: const Icon(
+                                            Icons.minimize,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(width: 20),
-                                    CustomText(
-                                      text: "1",
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                    ),
-                                    SizedBox(width: 20),
-                                    Container(
-                                      padding: EdgeInsets.only(bottom: 20),
-                                      child: Icon(
-                                        Icons.minimize,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
           ),
@@ -105,13 +94,13 @@ class CartScreen extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    CustomText(
+                    const CustomText(
                       text: "TOTAL",
                       fontSize: 22,
                       color: Colors.grey,
                     ),
-                    SizedBox(height: 10),
-                    CustomText(
+                    const SizedBox(height: 10),
+                    const CustomText(
                       text: "\$2000",
                       color: kPrimaryColor,
                       fontSize: 18,
@@ -121,7 +110,7 @@ class CartScreen extends StatelessWidget {
                 Container(
                   height: 80,
                   width: 120,
-                  padding: EdgeInsets.all(3),
+                  padding: const EdgeInsets.all(3),
                   child: CustomButton(
                     text: "CHECHOUT",
                     onPressed: () {},
