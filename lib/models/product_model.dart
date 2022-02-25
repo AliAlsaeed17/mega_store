@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mega_store/core/services/extenstion.dart';
 
 class ProductModel {
-  String? name, description, price, size, image;
+  String? productID, name, description, price, size, image;
   Color? color;
 
   ProductModel(
-      {required this.name,
+      {required this.productID,
+      required this.name,
       required this.description,
       required this.price,
       required this.color,
@@ -14,6 +15,7 @@ class ProductModel {
       required this.image});
 
   ProductModel.fromJson(Map<String, dynamic> map) {
+    productID = map['productID'];
     name = map['name'];
     description = map['description'];
     price = map['price'];
@@ -24,6 +26,7 @@ class ProductModel {
 
   toJson() {
     return {
+      'productID': productID,
       'name': name,
       'description': description,
       'price': price,
