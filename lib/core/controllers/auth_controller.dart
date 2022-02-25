@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mega_store/core/services/firebase_helper.dart';
+import 'package:mega_store/core/services/local_storage_helper.dart';
 import 'package:mega_store/models/user_model.dart';
+import 'package:mega_store/views/control_view.dart';
 import 'package:mega_store/views/home_screen.dart';
 
 class AuthController extends GetxController {
@@ -12,6 +14,7 @@ class AuthController extends GetxController {
   FacebookLogin _facebookLogin = FacebookLogin();
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseHelper firebaseHelper = FirebaseHelper();
+  LocalStorageHelper localStorageHelper = LocalStorageHelper();
 
   String fullName = "", email = "", password = "";
 
@@ -53,7 +56,7 @@ class AuthController extends GetxController {
         email: user.user?.email,
         pic: '',
       ));
-      Get.offAll(HomeScreen());
+      Get.offAll(ControlView());
     });
   }
 
@@ -66,7 +69,7 @@ class AuthController extends GetxController {
       final facebookCredential = FacebookAuthProvider.credential(accessToken);
       await _auth.signInWithCredential(facebookCredential).then((user) async {
         saveUser(user);
-        Get.offAll(HomeScreen());
+        Get.offAll(ControlView());
       });
     }
   }
@@ -77,7 +80,7 @@ class AuthController extends GetxController {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((user) async {
         saveUser(user);
-        Get.offAll(HomeScreen());
+        Get.offAll(ControlView());
       });
     } catch (e) {
       print(e.toString());
@@ -92,7 +95,7 @@ class AuthController extends GetxController {
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
         saveUser(user);
-        Get.offAll(HomeScreen());
+        Get.offAll(ControlView());
       });
     } catch (e) {
       print(e.toString());
@@ -101,12 +104,14 @@ class AuthController extends GetxController {
     }
   }
 
-  void saveUser(UserCredential user) async {
-    await firebaseHelper.addUsertoFirestore(UserModel(
-      id: user.user?.uid,
+  void saveUser(UserCredential userCredential) async {
+    UserModel user = UserModel(
+      id: userCredential.user?.uid,
       fullName: fullName,
-      email: user.user?.email,
+      email: userCredential.user?.email,
       pic: '',
-    ));
+    );
+    await firebaseHelper.addUsertoFirestore(user);
+    await localStorageHelper.setUser(user);
   }
 }
