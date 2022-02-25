@@ -24,6 +24,7 @@ dependencies:
   flutter_login_facebook: ^1.2.1
   sqflite: ^2.0.2
   path: ^1.8.0
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:
