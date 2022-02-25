@@ -42,22 +42,18 @@ class AuthController extends GetxController {
 
   void googleSignIn() async {
     final GoogleSignInAccount? googleAccount = await _googleSignIn.signIn();
-    //print(googleAccount);
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleAccount!.authentication;
     final AuthCredential authCredential = GoogleAuthProvider.credential(
       idToken: googleSignInAuthentication.idToken,
       accessToken: googleSignInAuthentication.accessToken,
     );
-    await _auth.signInWithCredential(authCredential).then((user) async {
-      await firebaseHelper.addUsertoFirestore(UserModel(
-        id: user.user?.uid,
-        fullName: fullName,
-        email: user.user?.email,
-        pic: '',
-      ));
-      Get.offAll(ControlView());
+    await _auth
+        .signInWithCredential(authCredential)
+        .then((userCredential) async {
+      saveUser(userCredential);
     });
+    Get.offAll(ControlView());
   }
 
   void facebookSignIn() async {
@@ -67,8 +63,10 @@ class AuthController extends GetxController {
     final accessToken = result.accessToken?.token;
     if (result.status == FacebookLoginStatus.success && accessToken != null) {
       final facebookCredential = FacebookAuthProvider.credential(accessToken);
-      await _auth.signInWithCredential(facebookCredential).then((user) async {
-        saveUser(user);
+      await _auth
+          .signInWithCredential(facebookCredential)
+          .then((userCredential) async {
+        saveUser(userCredential);
         Get.offAll(ControlView());
       });
     }
@@ -78,14 +76,22 @@ class AuthController extends GetxController {
     try {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((user) async {
-        saveUser(user);
+          .then((userCredential) async {
+        await firebaseHelper
+            .getCurrentUser(userCredential.user!.uid)
+            .then((user) async {
+          setUser(user);
+        });
         Get.offAll(ControlView());
       });
     } catch (e) {
       print(e.toString());
-      Get.snackbar("Error login account", e.toString(),
-          colorText: Colors.black, snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        "Error login account",
+        e.toString(),
+        colorText: Colors.black,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
@@ -112,6 +118,10 @@ class AuthController extends GetxController {
       pic: '',
     );
     await firebaseHelper.addUsertoFirestore(user);
+    setUser(user);
+  }
+
+  void setUser(UserModel user) async {
     await localStorageHelper.setUser(user);
   }
 }
