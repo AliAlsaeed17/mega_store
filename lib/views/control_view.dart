@@ -15,7 +15,7 @@ class ControlView extends GetWidget {
           : GetBuilder<NavigationController>(
               init: Get.find<NavigationController>(),
               builder: (controller) => Scaffold(
-                body: controller.currentScreen,
+                body: SafeArea(child: controller.currentScreen),
                 bottomNavigationBar: CustomBottomNavigationBar(),
               ),
             );
