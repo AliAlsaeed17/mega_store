@@ -40,4 +40,9 @@ class FirebaseHelper {
     });
     return _bestSellingProducts;
   }
+
+  Future<UserModel> getCurrentUser(String userID) async {
+    var userDocument = await _userCollectionRef.doc(userID).get();
+    return UserModel.fromJson(userDocument.data() as Map<dynamic, dynamic>);
+  }
 }
