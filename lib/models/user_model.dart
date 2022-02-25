@@ -5,7 +5,7 @@ class UserModel {
       {required this.id,
       required this.fullName,
       required this.email,
-      required this.pic});
+      this.pic = 'default'});
 
   UserModel.fromJson(Map<dynamic, dynamic> map) {
     id = map['id'];
