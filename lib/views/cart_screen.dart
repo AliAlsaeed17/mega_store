@@ -17,7 +17,7 @@ class CartScreen extends StatelessWidget {
             child: GetBuilder<CartController>(
               init: Get.find<CartController>(),
               builder: (controller) => Padding(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.only(top: 15),
                 child: Container(
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
@@ -25,60 +25,84 @@ class CartScreen extends StatelessWidget {
                     },
                     itemCount: controller.products.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        child: Row(
-                          children: [
-                            Image.network(controller.products[index].image!),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    text: controller.products[index].name!,
-                                    fontSize: 24,
-                                  ),
-                                  const SizedBox(height: 7),
-                                  CustomText(
-                                    text:
-                                        "\$${controller.products[index].price.toString()}",
-                                    color: kPrimaryColor,
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Container(
-                                    width: 120,
-                                    height: 40,
-                                    color: Colors.grey.shade200,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.add,
-                                          color: Colors.black,
-                                        ),
-                                        const SizedBox(width: 20),
-                                        const CustomText(
-                                          text: "1",
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                        const SizedBox(width: 20),
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 20),
-                                          child: const Icon(
-                                            Icons.minimize,
+                      return Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * .4,
+                                height: MediaQuery.of(context).size.width * .3,
+                                child: Image.network(
+                                  controller.products[index].image!,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      text: controller.products[index].name!,
+                                      fontSize: 22,
+                                    ),
+                                    const SizedBox(height: 7),
+                                    CustomText(
+                                      text:
+                                          "\$${controller.products[index].price.toString()}",
+                                      color: kPrimaryColor,
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      width: 120,
+                                      height: 40,
+                                      color: Colors.grey.shade200,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              controller
+                                                  .increaseQuantity(index);
+                                            },
+                                            child: const Icon(
+                                              Icons.add,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 20),
+                                          CustomText(
+                                            text: controller
+                                                .products[index].quantity
+                                                .toString(),
+                                            fontSize: 20,
                                             color: Colors.black,
                                           ),
-                                        ),
-                                      ],
+                                          const SizedBox(width: 20),
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 20),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                controller
+                                                    .decreaseQuantity(index);
+                                              },
+                                              child: const Icon(
+                                                Icons.minimize,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -100,10 +124,13 @@ class CartScreen extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     const SizedBox(height: 10),
-                    const CustomText(
-                      text: "\$2000",
-                      color: kPrimaryColor,
-                      fontSize: 18,
+                    GetBuilder<CartController>(
+                      init: Get.find<CartController>(),
+                      builder: (controller) => CustomText(
+                        text: "\$${controller.totalPrice}",
+                        color: kPrimaryColor,
+                        fontSize: 18,
+                      ),
                     ),
                   ],
                 ),
