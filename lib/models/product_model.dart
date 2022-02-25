@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mega_store/core/services/extenstion.dart';
+import 'package:mega_store/util/extenstion.dart';
 
 class ProductModel {
   String? productID, name, description, price, size, image;
