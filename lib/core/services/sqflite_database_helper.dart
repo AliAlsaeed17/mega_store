@@ -20,7 +20,8 @@ class MegaStoreDatabaseHelper {
       version: 1,
       onCreate: (Database db, int verson) async {
         await db.execute('''CREATE TABLE $cartTableName 
-        ($productNameColumn TEXT NOT NULL, 
+        ($productIDColumn TEXT NOT NULL,
+          $productNameColumn TEXT NOT NULL, 
         $productImageColumn TEXT NOT NULL, 
         $productQuantityColumn INTEGER NOT NULL,
         $productPriceColumn TEXT NOT NULL)''');
@@ -46,5 +47,11 @@ class MegaStoreDatabaseHelper {
         : [];
 
     return cartProducts;
+  }
+
+  update(CartProductModel product) async {
+    var dbClient = await database;
+    dbClient?.update(cartTableName, product.toJson(),
+        where: '$productIDColumn=?', whereArgs: [product.productID]);
   }
 }
