@@ -8,3 +8,5 @@ const String productNameColumn = "name";
 const String productImageColumn = "image";
 const String productQuantityColumn = "quantity";
 const String productPriceColumn = "price";
+
+const cachedUserData = 'chchedUserData';
