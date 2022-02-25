@@ -7,14 +7,11 @@ class UserModel {
       required this.email,
       required this.pic});
 
-  fromJson(Map<dynamic, dynamic> map) {
-    if (map == null) return;
-    return UserModel(
-      id: map['id'],
-      fullName: map['fullName'],
-      email: map['email'],
-      pic: map['pic'],
-    );
+  UserModel.fromJson(Map<dynamic, dynamic> map) {
+    id = map['id'];
+    fullName = map['fullName'];
+    email = map['email'];
+    pic = map['pic'];
   }
 
   toJson() {
