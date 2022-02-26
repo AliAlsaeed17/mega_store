@@ -6,19 +6,17 @@ import 'package:mega_store/models/user_model.dart';
 
 class ProfileController extends GetxController {
   final LocalStorageHelper localStorageHelper = LocalStorageHelper();
-  late UserModel? _userModel;
-  UserModel? get userModel => _userModel;
+  late UserModel _userModel;
+  UserModel get userModel => _userModel;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getCurrentUser();
+    await getCurrentUser();
   }
 
   getCurrentUser() async {
-    await localStorageHelper.getUser.then((value) {
-      _userModel = value;
-    });
+    _userModel = await localStorageHelper.getUser;
     update();
   }
 
