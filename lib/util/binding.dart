@@ -10,8 +10,5 @@ class AppBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => AuthController());
     Get.lazyPut(() => NavigationController(), fenix: true);
-    Get.lazyPut(() => HomeController(), fenix: true);
-    Get.lazyPut(() => CartController(), fenix: true);
-    Get.lazyPut(() => ProfileController(), fenix: true);
   }
 }
