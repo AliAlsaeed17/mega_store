@@ -18,14 +18,16 @@ class AuthController extends GetxController {
 
   String fullName = "", email = "", password = "";
 
-  Rxn<User?> _user = Rxn<User?>();
-  String? get userEmail => _user.value?.email;
+  // Rxn<User?> _user = Rxn<User?>();
+  // String? get userEmail => _user.value?.email;
+
+  Rx<bool> completeAuthentication = false.obs;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    _user.bindStream(_auth.authStateChanges());
+    //_user.bindStream(_auth.authStateChanges());
   }
 
   @override
@@ -80,7 +82,7 @@ class AuthController extends GetxController {
         await firebaseHelper
             .getCurrentUser(userCredential.user!.uid)
             .then((user) async {
-          setUser(user);
+          await setUser(user);
         });
         Get.offAll(ControlView());
       });
@@ -115,13 +117,14 @@ class AuthController extends GetxController {
       id: userCredential.user?.uid,
       fullName: fullName,
       email: userCredential.user?.email,
-      pic: '',
+      pic: 'default',
     );
     await firebaseHelper.addUsertoFirestore(user);
-    setUser(user);
+    await setUser(user);
   }
 
-  void setUser(UserModel user) async {
+  Future<void> setUser(UserModel user) async {
     await localStorageHelper.setUser(user);
+    completeAuthentication.value = true;
   }
 }
