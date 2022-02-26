@@ -3,7 +3,7 @@ class UserModel {
 
   UserModel(
       {required this.id,
-      required this.fullName,
+      this.fullName = '',
       required this.email,
       this.pic = 'default'});
 
