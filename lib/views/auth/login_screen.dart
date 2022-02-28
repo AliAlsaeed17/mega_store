@@ -9,7 +9,7 @@ import '../widgets/custom_text.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/custom_icon_button.dart';
 
-class LoginScreen extends GetWidget<AuthController> {
+class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -22,92 +22,108 @@ class LoginScreen extends GetWidget<AuthController> {
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 30, right: 20, left: 20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const CustomText(
-                      text: "Welcome",
-                      fontSize: 30,
-                    ),
-                    GestureDetector(
-                      child: const CustomText(
-                        text: "Sign Up",
-                        fontSize: 18,
-                        color: kPrimaryColor,
+        child: GetBuilder<AuthController>(
+          init: Get.find<AuthController>(),
+          builder: (controller) => Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const CustomText(
+                            text: "Welcome",
+                            fontSize: 30,
+                          ),
+                          GestureDetector(
+                            child: const CustomText(
+                              text: "Sign Up",
+                              fontSize: 18,
+                              color: kPrimaryColor,
+                            ),
+                            onTap: () {
+                              Get.to(RegisterScreen());
+                            },
+                          ),
+                        ],
                       ),
-                      onTap: () {
-                        Get.to(RegisterScreen());
-                      },
-                    ),
-                  ],
+                      const SizedBox(height: 10),
+                      const CustomText(
+                        text: "Sign in to continue",
+                        fontSize: 14,
+                        color: Colors.grey,
+                        alignment: Alignment.topLeft,
+                      ),
+                      const SizedBox(height: 25),
+                      CustomTextFormField(
+                        text: "Email",
+                        hintText: "Please enter your Email",
+                        onSaved: (value) {
+                          controller.email = value!;
+                        },
+                      ),
+                      const SizedBox(height: 35),
+                      CustomTextFormField(
+                        text: "Password",
+                        hintText: "********",
+                        onSaved: (value) {
+                          controller.password = value!;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      const CustomText(
+                        text: "Forget Password",
+                        fontSize: 14,
+                        alignment: Alignment.topRight,
+                      ),
+                      const SizedBox(height: 20),
+                      CustomButton(
+                        text: "SIGN IN",
+                        onPressed: () {
+                          _formKey.currentState!.save();
+                          if (_formKey.currentState!.validate()) {
+                            controller.emailAndPasswordSignIn();
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      const CustomText(
+                        text: "-OR-",
+                        alignment: Alignment.center,
+                      ),
+                      const SizedBox(height: 5),
+                      CustomIconButton(
+                        text: "Sign In with Google",
+                        imagePath: "assets/images/google.png",
+                        onPressed: () {
+                          controller.googleSignIn();
+                        },
+                      ),
+                      CustomIconButton(
+                        text: "Sign In with Facebook",
+                        imagePath: "assets/images/facebook.png",
+                        onPressed: () {
+                          controller.facebookSignIn();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10),
-                const CustomText(
-                  text: "Sign in to continue",
-                  fontSize: 14,
-                  color: Colors.grey,
-                  alignment: Alignment.topLeft,
-                ),
-                const SizedBox(height: 25),
-                CustomTextFormField(
-                  text: "Email",
-                  hintText: "Please enter your Email",
-                  onSaved: (value) {
-                    controller.email = value!;
-                  },
-                ),
-                const SizedBox(height: 35),
-                CustomTextFormField(
-                  text: "Password",
-                  hintText: "********",
-                  onSaved: (value) {
-                    controller.password = value!;
-                  },
-                ),
-                const SizedBox(height: 20),
-                const CustomText(
-                  text: "Forget Password",
-                  fontSize: 14,
-                  alignment: Alignment.topRight,
-                ),
-                const SizedBox(height: 20),
-                CustomButton(
-                  text: "SIGN IN",
-                  onPressed: () {
-                    _formKey.currentState!.save();
-                    if (_formKey.currentState!.validate()) {
-                      controller.emailAndPasswordSignIn();
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
-                const CustomText(
-                  text: "-OR-",
-                  alignment: Alignment.center,
-                ),
-                const SizedBox(height: 5),
-                CustomIconButton(
-                  text: "Sign In with Google",
-                  imagePath: "assets/images/google.png",
-                  onPressed: () {
-                    controller.googleSignIn();
-                  },
-                ),
-                CustomIconButton(
-                  text: "Sign In with Facebook",
-                  imagePath: "assets/images/facebook.png",
-                  onPressed: () {
-                    controller.facebookSignIn();
-                  },
-                ),
-              ],
-            ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height * .28,
+                left: MediaQuery.of(context).size.width * .4,
+                child: controller.isAuthenticate == true
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(),
+              ),
+            ],
           ),
         ),
       ),

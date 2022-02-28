@@ -6,7 +6,7 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/custom_text_form_field.dart';
 
-class RegisterScreen extends GetWidget<AuthController> {
+class RegisterScreen extends StatelessWidget {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -26,52 +26,63 @@ class RegisterScreen extends GetWidget<AuthController> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 50, right: 20, left: 20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const CustomText(
-                  text: "Sign Up",
-                  fontSize: 30,
+        child: GetBuilder<AuthController>(
+          init: Get.find<AuthController>(),
+          builder: (controller) => Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 50, right: 20, left: 20),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      const CustomText(
+                        text: "Sign Up",
+                        fontSize: 30,
+                      ),
+                      const SizedBox(height: 10),
+                      const SizedBox(height: 25),
+                      CustomTextFormField(
+                        text: "Full Name",
+                        hintText: "Please enter your full name",
+                        onSaved: (value) {
+                          controller.fullName = value!;
+                        },
+                      ),
+                      const SizedBox(height: 35),
+                      CustomTextFormField(
+                        text: "Email",
+                        hintText: "Please enter your Email",
+                        onSaved: (value) {
+                          controller.email = value!;
+                        },
+                      ),
+                      const SizedBox(height: 35),
+                      CustomTextFormField(
+                        text: "Password",
+                        hintText: "********",
+                        onSaved: (value) {
+                          controller.password = value!;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      CustomButton(
+                        text: "SIGN UP",
+                        onPressed: () {
+                          _formKey.currentState!.save();
+                          if (_formKey.currentState!.validate()) {
+                            controller.emailAndPasswordSignUp();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10),
-                const SizedBox(height: 25),
-                CustomTextFormField(
-                  text: "Full Name",
-                  hintText: "Please enter your full name",
-                  onSaved: (value) {
-                    controller.fullName = value!;
-                  },
-                ),
-                const SizedBox(height: 35),
-                CustomTextFormField(
-                  text: "Email",
-                  hintText: "Please enter your Email",
-                  onSaved: (value) {
-                    controller.email = value!;
-                  },
-                ),
-                const SizedBox(height: 35),
-                CustomTextFormField(
-                  text: "Password",
-                  hintText: "********",
-                  onSaved: (value) {
-                    controller.password = value!;
-                  },
-                ),
-                const SizedBox(height: 20),
-                CustomButton(
-                    text: "SIGN UP",
-                    onPressed: () {
-                      _formKey.currentState!.save();
-                      if (_formKey.currentState!.validate()) {
-                        controller.emailAndPasswordSignUp();
-                      }
-                    }),
-              ],
-            ),
+              ),
+              controller.isAuthenticate == true
+                  ? CircularProgressIndicator()
+                  : Container(),
+            ],
           ),
         ),
       ),
