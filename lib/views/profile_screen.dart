@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mega_store/core/controllers/profile_controller.dart';
 import 'package:mega_store/views/auth/login_screen.dart';
 import 'package:mega_store/views/widgets/custom_button.dart';
+import 'package:mega_store/views/widgets/custom_listtile_button.dart';
 import 'package:mega_store/views/widgets/custom_text.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
       builder: (controller) => controller.isSettingUserData
           ? CircularProgressIndicator()
           : Container(
-              padding: EdgeInsets.only(top: 50),
+              padding: EdgeInsets.only(top: 40),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -27,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
                             width: 120,
                             height: 120,
                             decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.grey,
                               borderRadius: BorderRadius.circular(100),
                               image: DecorationImage(
                                 image: controller.userModel.pic == 'default'
@@ -56,123 +57,45 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 100),
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: ListTile(
-                          title: CustomText(
-                            text: "Edit Profile",
-                            alignment: Alignment.centerLeft,
-                          ),
-                          leading: Icon(
-                            Icons.person,
-                          ),
-                          trailing: Icon(
-                            Icons.navigate_next,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    SizedBox(height: 70),
+                    CustomListTileButton(
+                      text: 'Edit Profile',
+                      leading: Icons.person,
+                      onTap: () {},
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: ListTile(
-                          title: CustomText(
-                            text: "Shipping Address",
-                            alignment: Alignment.centerLeft,
-                          ),
-                          leading: Icon(
-                            Icons.location_on,
-                          ),
-                          trailing: Icon(
-                            Icons.navigate_next,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    SizedBox(height: 15),
+                    CustomListTileButton(
+                      text: 'Shipping Address',
+                      leading: Icons.location_on,
+                      onTap: () {},
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: ListTile(
-                          title: CustomText(
-                            text: "Order History",
-                            alignment: Alignment.centerLeft,
-                          ),
-                          leading: Icon(
-                            Icons.history_rounded,
-                          ),
-                          trailing: Icon(
-                            Icons.navigate_next,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    SizedBox(height: 15),
+                    CustomListTileButton(
+                      text: 'Order History',
+                      leading: Icons.history_rounded,
+                      onTap: () {},
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: ListTile(
-                          title: CustomText(
-                            text: "Cards",
-                            alignment: Alignment.centerLeft,
-                          ),
-                          leading: Icon(
-                            Icons.payment,
-                          ),
-                          trailing: Icon(
-                            Icons.navigate_next,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    SizedBox(height: 15),
+                    CustomListTileButton(
+                      text: 'Cards',
+                      leading: Icons.payment,
+                      onTap: () {},
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: ListTile(
-                          title: CustomText(
-                            text: "Notifications",
-                            alignment: Alignment.centerLeft,
-                          ),
-                          leading: Icon(
-                            Icons.notifications,
-                          ),
-                          trailing: Icon(
-                            Icons.navigate_next,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    SizedBox(height: 15),
+                    CustomListTileButton(
+                      text: 'Notifications',
+                      leading: Icons.notifications,
+                      onTap: () {},
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {
-                          controller.signOut();
-                          Get.offAll(LoginScreen());
-                        },
-                        child: ListTile(
-                          title: CustomText(
-                            text: "Logout",
-                            alignment: Alignment.centerLeft,
-                          ),
-                          leading: Icon(
-                            Icons.logout,
-                          ),
-                          trailing: Icon(
-                            Icons.navigate_next,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
+                    SizedBox(height: 15),
+                    CustomListTileButton(
+                      text: 'Logout',
+                      leading: Icons.logout,
+                      onTap: () {
+                        controller.signOut();
+                        Get.to(LoginScreen());
+                      },
+                    )
                   ],
                 ),
               ),
