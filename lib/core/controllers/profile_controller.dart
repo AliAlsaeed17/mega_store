@@ -8,6 +8,8 @@ class ProfileController extends GetxController {
   final LocalStorageHelper localStorageHelper = LocalStorageHelper();
   late UserModel _userModel;
   UserModel get userModel => _userModel;
+  bool _isSettingUserData = true;
+  bool get isSettingUserData => _isSettingUserData;
 
   @override
   void onInit() async {
@@ -17,6 +19,7 @@ class ProfileController extends GetxController {
 
   getCurrentUser() async {
     _userModel = await localStorageHelper.getUser;
+    _isSettingUserData = false;
     update();
   }
 
