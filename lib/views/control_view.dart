@@ -13,14 +13,11 @@ class ControlView extends GetWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return (!Get.find<AuthController>().completeAuthentication.value)
+      return (Get.find<AuthController>().userEmail == null)
           ? LoginScreen()
           : GetBuilder<NavigationController>(
               init: Get.find<NavigationController>(),
               builder: (controller) {
-                Get.put(HomeController());
-                Get.put(CartController());
-                Get.put(ProfileController());
                 return Scaffold(
                   body: SafeArea(child: controller.currentScreen),
                   bottomNavigationBar: CustomBottomNavigationBar(),
