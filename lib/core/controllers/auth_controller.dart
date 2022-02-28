@@ -18,16 +18,17 @@ class AuthController extends GetxController {
 
   String fullName = "", email = "", password = "";
 
-  // Rxn<User?> _user = Rxn<User?>();
-  // String? get userEmail => _user.value?.email;
+  Rxn<User?> _user = Rxn<User?>();
+  String? get userEmail => _user.value?.email;
 
-  Rx<bool> completeAuthentication = false.obs;
+  bool _isAuthenticate = false;
+  bool get isAuthenticate => _isAuthenticate;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    //_user.bindStream(_auth.authStateChanges());
+    _user.bindStream(_auth.authStateChanges());
   }
 
   @override
@@ -50,6 +51,8 @@ class AuthController extends GetxController {
       idToken: googleSignInAuthentication.idToken,
       accessToken: googleSignInAuthentication.accessToken,
     );
+    _isAuthenticate = true;
+    update();
     await _auth
         .signInWithCredential(authCredential)
         .then((userCredential) async {
@@ -59,6 +62,7 @@ class AuthController extends GetxController {
   }
 
   void facebookSignIn() async {
+    _isAuthenticate = true;
     FacebookLoginResult result =
         await _facebookLogin.logIn(permissions: [FacebookPermission.email]);
     print(result);
@@ -75,6 +79,7 @@ class AuthController extends GetxController {
   }
 
   void emailAndPasswordSignIn() async {
+    _isAuthenticate = true;
     try {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
@@ -98,6 +103,7 @@ class AuthController extends GetxController {
   }
 
   void emailAndPasswordSignUp() async {
+    _isAuthenticate = true;
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -125,6 +131,6 @@ class AuthController extends GetxController {
 
   Future<void> setUser(UserModel user) async {
     await localStorageHelper.setUser(user);
-    completeAuthentication.value = true;
+    _isAuthenticate = false;
   }
 }
