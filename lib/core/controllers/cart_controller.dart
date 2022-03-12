@@ -4,21 +4,23 @@ import 'package:mega_store/models/cart_product_model.dart';
 
 class CartController extends GetxController {
   MegaStoreDatabaseHelper databaseHelper = MegaStoreDatabaseHelper.db;
-  bool _loading = false;
-  bool get loading => _loading;
+  bool _isLoadingCart = true;
+  bool get isLoadingCart => _isLoadingCart;
   List<CartProductModel> _products = [];
   List<CartProductModel> get products => _products;
   double _totalPrice = 0.0;
   double get totalPrice => _totalPrice;
+  bool _isCartEmpty = true;
+  bool get isCartEmpty => _isCartEmpty;
 
   CartController() {
     getAllProducts();
   }
 
   getAllProducts() async {
-    _loading = true;
     _products = await databaseHelper.getAllProducts();
-    _loading = false;
+    _isLoadingCart = false;
+    if (_products.isNotEmpty) _isCartEmpty = false;
     getTotalPrice();
   }
 
@@ -32,7 +34,7 @@ class CartController extends GetxController {
     }
 
     await databaseHelper.insert(cartProduct);
-    print(cartProduct.quantity);
+
     getAllProducts();
   }
 
@@ -55,7 +57,15 @@ class CartController extends GetxController {
   decreaseQuantity(int index) async {
     _products[index].quantity--;
     _totalPrice -= double.parse(_products[index].price!);
-    await databaseHelper.update(_products[index]);
-    update();
+
+    if (_products[index].quantity == 0) {
+      await databaseHelper.delete(_products[index]);
+      _products.removeAt(index);
+      if (_products.isEmpty) _isCartEmpty = true;
+      update();
+    } else if (_products[index].quantity >= 0) {
+      await databaseHelper.update(_products[index]);
+      update();
+    }
   }
 }

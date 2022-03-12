@@ -54,4 +54,10 @@ class MegaStoreDatabaseHelper {
     dbClient?.update(cartTableName, product.toJson(),
         where: '$productIDColumn=?', whereArgs: [product.productID]);
   }
+
+  delete(CartProductModel product) async {
+    var dbClient = await database;
+    dbClient?.delete(cartTableName,
+        where: '$productIDColumn=?', whereArgs: [product.productID]);
+  }
 }
