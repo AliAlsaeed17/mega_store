@@ -6,15 +6,13 @@ import 'package:mega_store/views/checkout/add_address.dart';
 import 'package:mega_store/views/checkout/delevery_time.dart';
 import 'package:mega_store/views/checkout/summary.dart';
 import 'package:mega_store/views/widgets/custom_button.dart';
-import 'package:timelines/timelines.dart';
-
-GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<CheckoutController>(
