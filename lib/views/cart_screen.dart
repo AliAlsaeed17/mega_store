@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mega_store/constants.dart';
 import 'package:mega_store/core/controllers/cart_controller.dart';
-import 'package:mega_store/views/checkout_screen.dart';
+import 'package:mega_store/views/checkout/checkout_screen.dart';
 import 'package:mega_store/views/widgets/custom_button.dart';
 import 'package:mega_store/views/widgets/custom_text.dart';
 
@@ -171,7 +171,7 @@ class CartScreen extends StatelessWidget {
                             child: CustomButton(
                               text: "CHECHOUT",
                               onPressed: () {
-                                Get.to(MyStatefulWidget());
+                                Get.to(CheckoutScreen());
                               },
                             ),
                           ),
