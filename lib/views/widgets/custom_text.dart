@@ -13,7 +13,7 @@ class CustomText extends StatelessWidget {
     this.text = "",
     this.fontSize = 16,
     this.color = Colors.black,
-    this.alignment = Alignment.center,
+    this.alignment = Alignment.centerLeft,
     this.maxLines,
     this.lineSpace,
   }) : super(key: key);
